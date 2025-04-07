@@ -423,12 +423,12 @@ for(i in seq_along(zinatniskie)){
     geom_point(position = position_jitterdodge(jitter.width = 0.01, jitter.height = 0), size = 2) +
     theme_classic() +
     scale_y_log10() +
-    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi/nAll observations" = 16, "Ligzdotāji\nAmong nesters" = 17),drop=FALSE) + 
+    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong nesters" = 17),drop=FALSE) + 
     scale_color_manual("Preference",
                        values = c("pref_Putniem" = "grey",
                                   "pref_SugasIetvaros" = "#56B4E9",
                                   "pref_PutnuIetvaros" = "#E69F00"),
-                       labels = c("Visu putnu novērojumu ietvaros\nWithin all bird sightings\n",
+                       labels = c("Visi putnu novērojumi\nAll bird sightings\n",
                                   "Visu sugu ietvaros\nWithin all species\n",
                                   "Savas sugas ietvaros\nWithin one's own species"
                        )) +
