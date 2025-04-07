@@ -321,10 +321,10 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
       "Ligzd_Putnu" = "#E69F00"
     ),
     labels = c(
-      "Visu sugu ietvaros, starp ligzdotājiem\nWithin all species, among nesters",
-      "Savas sugas ietvaros, starp ligzdotājiem\nWithin one's own species, among nesters",
-      "Visu sugu ietvaros, starp visiem novērojumiem\nWithin all species, among all observations",
-      "Savas sugas ietvaros, starp visiem novērojumiem\nWithin one's own species, among all observations"
+      "Visu sugu ietvaros (ligzdotāji)\nWithin all species (nesters)",
+      "Savas sugas ietvaros (ligzdotāji)\nWithin one's own species (nesters)",
+      "Visu sugu ietvaros (visi novērojumi)\nWithin all species (all observations)",
+      "Savas sugas ietvaros (visi novērojumi)\nWithin one's own species (all observations)"
     )
   ) +
   
@@ -394,10 +394,10 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, fill = Kolonna))
   scale_fill_manual(
     values = colorblind_palette,
     labels = c(
-      "Visu sugu ietvaros, starp ligzdotājiem\nWithin all species, among nesters",
-      "Savas sugas ietvaros, starp ligzdotājiem\nWithin one's own species, among nesters",
-      "Visu sugu ietvaros, starp visiem novērojumiem \nWithin all species, among all observations",
-      "Savas sugas ietvaros, starp visiem novērojumiem\nWithin one's own species, among all observations"
+      "Visu sugu ietvaros (ligzdotāji)\nWithin all species (nesters)",
+      "Savas sugas ietvaros (ligzdotāji)\nWithin one's own species (nesters)",
+      "Visu sugu ietvaros (visi novērojumi)\nWithin all species (all observations)",
+      "Savas sugas ietvaros (visi novērojumi)\nWithin one's own species (all observations)"
     )
   ) +
   
