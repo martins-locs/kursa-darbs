@@ -9,10 +9,10 @@ library(openxlsx)
 
 # 2. dati ----
 Sys.setlocale("LC_NUMERIC", "C")
-ainava=terra::rast("./IevadesDati/Ainava_vienk_mask.tif")
+ainava=terra::rast("../IevadesDati/Ainava_vienk_mask.tif")
 
-st_layers("./IevadesDati/martinam_dabasdati.gpkg")
-noverojumi0=read_sf("./IevadesDati/martinam_dabasdati.gpkg",
+st_layers("../IevadesDati/martinam_dabasdati.gpkg")
+noverojumi0=read_sf("../IevadesDati/martinam_dabasdati.gpkg",
                     layer="putni_dabasdati_2023")
 noverojumi0=st_transform(noverojumi0,crs=st_crs(ainava))
 
