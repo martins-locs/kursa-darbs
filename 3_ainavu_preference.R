@@ -347,11 +347,11 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
     axis.text.x = element_blank(),
     axis.text.y = element_text(size = 8),
     legend.position = "bottom",
-    legend.text = element_text(size = 7.5)
+    legend.text = element_text(size = 9.5)
   ) +
   
   facet_wrap(~ Ainava, nrow = 1, scales = "fixed") +
-  EnvStats::stat_n_text(vjust = -0.5, size = 2) +
+  EnvStats::stat_n_text(vjust = -0.5, size = 2.5) +
   guides(color = guide_legend(title = NULL))
 
 
@@ -418,10 +418,10 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, fill = Kolonna))
     axis.text.x = element_blank(),
     axis.text.y = element_text(size = 8),
     legend.position = "bottom",
-    legend.text = element_text(size = 7.5)
+    legend.text = element_text(size = 9.5)
   ) +
   facet_wrap(~ Ainava, nrow = 1, scales = "fixed") +
-  EnvStats::stat_n_text(vjust = -0.5, size = 2) +
+  EnvStats::stat_n_text(vjust = -0.5, size = 2.5) +
   guides(fill = guide_legend(title = NULL))
 
 
@@ -434,3 +434,4 @@ ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference_2.jpg",
        dpi = 300, 
        units = "px", 
        device = "jpg")
+
