@@ -158,7 +158,7 @@ ggplot(data = putni_dzied_ainava) +
     strip.text = element_text(face = "bold"),
     legend.background = element_rect(color = "black", fill = "white", size = 0.25) 
   ) +
-  guides(color = "none", shape = guide_legend(title = "Datu kvalitātes klase"))
+  guides(color = "none", shape = guide_legend(title = "Populāciju lieluma datu kvalitātes klase"))
 
 
 test_results <- list()
