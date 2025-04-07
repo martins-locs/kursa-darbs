@@ -9,7 +9,7 @@ library(effects)
 library(forcats)
 library(ggthemes)
 
-putni <- read_excel("putni.xlsx")
+putni <- read_excel("./IevadesDati/putni.xlsx")
 
 ainavas <- c(100, 200, 310, 610, 710, 720, 800)
 
@@ -169,7 +169,7 @@ for (ainava_group in unique(putni_dzied_ainava$Ainava)) {
 
 test_results
 
-ggsave(filename = "Putnu_sugu_akustiska_ainava.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
@@ -285,7 +285,7 @@ ggplot(visi_prognoze, aes(factor(x), predicted,
     strip.text = element_text(face = "bold")
   )
 
-ggsave(filename = "prognoze.jpg", 
+ggsave(filename = "./Rezultati/prognoze.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
@@ -355,7 +355,7 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
   guides(color = guide_legend(title = NULL))
 
 
-ggsave(filename = "Putnu_sugu_ainavu preference_1.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference_1.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
@@ -427,7 +427,7 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, fill = Kolonna))
 
 
 
-ggsave(filename = "Putnu_sugu_ainavu preference_2.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference_2.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
