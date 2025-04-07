@@ -169,4 +169,4 @@ apvienots_2 <- apvienots_2 %>%
 
 
 ## 4. Saglabā rezultātu ----
-write.xlsx(apvienots_2, "./IevadesDati/putni.xlsx", overwrite = TRUE)
+#write.xlsx(apvienots_2, "./IevadesDati/putni.xlsx", overwrite = TRUE)
