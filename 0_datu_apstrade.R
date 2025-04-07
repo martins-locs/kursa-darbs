@@ -368,13 +368,13 @@ for(i in seq_along(zinatniskie)){
     dplyr::select(sugaLV, sugaZIN, klase, pref_SugasIetvaros, pref_PutnuIetvaros,pref_Putniem) %>% 
     pivot_longer(cols = pref_SugasIetvaros:pref_Putniem,
                  names_to = "veids", values_to = "vertiba") %>% 
-    mutate(tips="Visi novērojumi/nAll observations")
+    mutate(tips="Visi novērojumi\nAll observations")
   
   dati_ligzdotaji2 = grr_ligzdotaji2 %>% 
     dplyr::select(sugaLV, sugaZIN, klase, pref_SugasIetvaros, pref_PutnuIetvaros,pref_Putniem) %>% 
     pivot_longer(cols = pref_SugasIetvaros:pref_Putniem,
                  names_to = "veids", values_to = "vertiba") %>% 
-    mutate(tips="Ligzdotāji\nAmong nesters")
+    mutate(tips="Ligzdotāji\nAmong nesters\n")
   
   print("apvienosana attēlam")
   dati_attelam=rbind(dati_all2,dati_ligzdotaji2)
@@ -383,7 +383,7 @@ for(i in seq_along(zinatniskie)){
                                    klase=NA,
                                    veids="pref_Putniem",
                                    vertiba=NA,
-                                   tips="Ligzdotāji\nAmong nesters")
+                                   tips="Ligzdotāji\nAmong nesters\n")
   dati_attelam2=rbind(dati_attelam,pievienot_ligzdotajus)
   
   dati_attelam2$klase <- recode(dati_attelam2$klase,
@@ -423,7 +423,7 @@ for(i in seq_along(zinatniskie)){
     geom_point(position = position_jitterdodge(jitter.width = 0.01, jitter.height = 0), size = 2) +
     theme_classic() +
     scale_y_log10() +
-    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong nesters" = 17),drop=FALSE) + 
+    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong nesters\n" = 17),drop=FALSE) + 
     scale_color_manual("Preference",
                        values = c("pref_Putniem" = "grey",
                                   "pref_SugasIetvaros" = "#56B4E9",
