@@ -3,7 +3,7 @@ library(ggplot2)
 library(patchwork)
 
 
-putni <- read_excel("putni_2.xlsx")
+putni <- read_excel("putni.xlsx")
 
 putni$Dzied.Biotopa.attieciba <- putni$Dzied.Biotopa.attieciba + 1e-5
 

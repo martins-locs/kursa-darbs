@@ -9,7 +9,7 @@ library(effects)
 library(forcats)
 library(ggthemes)
 
-putni <- read_excel("putni_2.xlsx")
+putni <- read_excel("putni.xlsx")
 
 ainavas <- c(100, 200, 310, 610, 710, 720, 800)
 
