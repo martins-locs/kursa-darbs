@@ -11,7 +11,7 @@ library(psych)
 
 # 1. Darbs ar XML failu ----
 ## 1.1. Ielādē XML failu ----
-xml_data <- xmlParse("LV_birds_reports_20191030-151740.xml")  
+xml_data <- xmlParse("./IevadesDati/LV_birds_reports_20191030-151740.xml")  
 xml_list <- xmlToList(xml_data)
 
 ## 1.2. Filtrējam XML sarakstu, lai saglabājam tikai 'bird_report' elementus
@@ -29,15 +29,15 @@ xml_dati <- xml_dati %>%
          }))
 
 ## 1.4. Saglabā Excel failā ----
-write.xlsx(xml_dati, "LV_birds_reports_2019.xlsx")
+write.xlsx(xml_dati, "./IevadesDati/LV_birds_reports_2019.xlsx")
 
 
 
 
 #2. Datu apvienošana ----
 ## 2.1. Ielādē failus ----
-putni_direktiva <- read_excel("LV_birds_reports_2019.xlsx")
-putni_dabasdati <- read_excel("putni_SkaitiPazimes_kops2016.xlsx", .name_repair = "universal")
+putni_direktiva <- read_excel("./IevadesDati/LV_birds_reports_2019.xlsx")
+putni_dabasdati <- read_excel("./IevadesDati/putni_SkaitiPazimes_kops2016.xlsx", .name_repair = "universal")
 
 putni_dabasdati <- putni_dabasdati %>%
   mutate(sugaZIN = trimws(sugaZIN),
@@ -136,7 +136,7 @@ apvienots_1 <- apvienots_1 %>%
 
 
 ## 3. Ielādē preferences.xlsx un pārsauc kolonnu nosaukumus ----
-preferences <- read_excel("preferences.xlsx", .name_repair = "universal")
+preferences <- read_excel("./IevadesDati/preferences.xlsx", .name_repair = "universal")
 
 preferences <- preferences %>%
   mutate(sugaZIN = trimws(sugaZIN),
@@ -169,4 +169,4 @@ apvienots_2 <- apvienots_2 %>%
 
 
 ## 4. Saglabā rezultātu ----
-write.xlsx(apvienots_2, "putni.xlsx", overwrite = TRUE)
+write.xlsx(apvienots_2, "./IevadesDati/putni.xlsx", overwrite = TRUE)
