@@ -48,7 +48,7 @@ noverojumi0=noverojumi0 %>%
 ## 3.1. Klasu platiba ----
 klasu_platibas=terra::freq(ainava)
 
-klasu_platibas2 <- klasu_platibas %>%
+klasu_platibas <- klasu_platibas %>%
   mutate(value = as.character(value)) %>%
   select(-layer) %>%
   mutate(value = case_when(
@@ -61,15 +61,11 @@ klasu_platibas2 <- klasu_platibas %>%
   group_by(value) %>%
   summarise(count = sum(count), .groups = "drop")
 
-klasu_platibas2=klasu_platibas2 %>% 
-  mutate(kopeja_platiba=sum(count),
-         klases_ipatsvars=count/kopeja_platiba)
-
 klasu_platibas=klasu_platibas %>% 
   mutate(kopeja_platiba=sum(count),
          klases_ipatsvars=count/kopeja_platiba)
 
-#klasu_platibas2=klasu_platibas %>% 
+#klasu_platibas=klasu_platibas %>% 
 #  dplyr::select(-layer)
 
 
@@ -79,7 +75,7 @@ klasu_platibas=klasu_platibas %>%
 #save.image(file = "./IevadesDati/my_environment.RData")
 load("./IevadesDati/my_environment.RData")
 
-#write.xlsx(klasu_platibas2, "klasu_platibas.xlsx", overwrite = TRUE)
+#write.xlsx(klasu_platibas, "klasu_platibas.xlsx", overwrite = TRUE)
 
 noverojumi <- noverojumi0 %>%
   mutate(klase = case_when(
@@ -113,11 +109,11 @@ noverojumi2=noverojumi %>%
 
 
 ## 3.2. Noverojumi 3 ----
-klasu_platibas2 <- klasu_platibas2 %>%
+klasu_platibas <- klasu_platibas %>%
   mutate(value = as.numeric(value))
 
 noverojumi3 <- noverojumi2 %>%
-  left_join(klasu_platibas2, by = c("klase" = "value"))
+  left_join(klasu_platibas, by = c("klase" = "value"))
 
 
 ## 3.3. Noverojumi apkopots ----
