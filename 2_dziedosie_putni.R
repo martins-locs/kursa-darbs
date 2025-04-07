@@ -3,7 +3,7 @@ library(ggplot2)
 library(patchwork)
 
 
-putni <- read_excel("putni.xlsx")
+putni <- read_excel("./IevadesDati/putni.xlsx")
 
 putni$Dzied.Biotopa.attieciba <- putni$Dzied.Biotopa.attieciba + 1e-5
 
@@ -219,7 +219,7 @@ print(grafiks_6)
 
 grafiks_1 | grafiks_2
 
-ggsave(filename = "Putnu_sugu_akustiska_kvalitate.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_kvalitate.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
@@ -232,7 +232,7 @@ ggsave(filename = "Putnu_sugu_akustiska_kvalitate.jpg",
 
 grafiks_3 | grafiks_4
 
-ggsave(filename = "Putnu_populacija_monitorings.jpg", 
+ggsave(filename = "./Rezultati/Putnu_populacija_monitorings.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
@@ -245,7 +245,7 @@ ggsave(filename = "Putnu_populacija_monitorings.jpg",
 
 grafiks_5 | grafiks_6
 
-ggsave(filename = "Putnu_sugu_akustiska_tendence.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_tendence.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
