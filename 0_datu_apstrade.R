@@ -325,7 +325,7 @@ df_final <- df_sugas %>%
   left_join(df_ligzd_putni, by = c("sugaLV", "sugaZIN"))
 
 # Saglabājam rezultātu kā Excel failu
-write_xlsx(df_final, "./IevadesDati/preferences.xlsx")
+#write_xlsx(df_final, "./IevadesDati/preferences.xlsx")
 
 
 
@@ -386,8 +386,21 @@ for(i in seq_along(zinatniskie)){
                                    tips="Ligzdotāji\nAmong nesters")
   dati_attelam2=rbind(dati_attelam,pievienot_ligzdotajus)
   
+  dati_attelam2$klase <- recode(dati_attelam2$klase,
+                                "100" = "Ceļi\nRoads",
+                                "200" = "Ūdeņi\nWaters",
+                                "310" = "Aramzeme\nAgricultural land",
+                                "610" = "Meži\nForests",
+                                "710" = "Purvi\nMarshes",
+                                "720" = "Niedrāji\nReedbeds",
+                                "800" = "Smiltāji\nSandbanks"
+                                )
+  
+  dati_attelam2$klase <- factor(dati_attelam2$klase,
+                                levels = c("Ceļi\nRoads", "Ūdeņi\nWaters", "Aramzeme\nAgricultural land", "Meži\nForests", "Purvi\nMarshes", "Niedrāji\nReedbeds", "Smiltāji\nSandbanks"))
   
   
+  unique(dati_attelam2$klase)
   
   
   print("virsrakstam")
@@ -429,6 +442,6 @@ for(i in seq_along(zinatniskie)){
   print("saglabāšana")
   zinatniskais_clean = gsub("/", "_", zinatniskais)
   
-  faila_nosaukums = paste0("./atteli/", zinatniskais_clean, ".png")
+  faila_nosaukums = paste0("../atteli/", zinatniskais_clean, ".png")
   ggsave(attels, filename = faila_nosaukums, height = 1800, width = 2700, dpi = 300, units = "px", device = "png")
 }
