@@ -76,8 +76,8 @@ klasu_platibas=klasu_platibas %>%
 
 
 
-#save.image(file = "my_environment.RData")
-load("my_environment.RData")
+#save.image(file = "./IevadesDati/my_environment.RData")
+load("./IevadesDati/my_environment.RData")
 
 #write.xlsx(klasu_platibas2, "klasu_platibas.xlsx", overwrite = TRUE)
 
@@ -296,8 +296,8 @@ ainavklasem_ligzdotaji = rbind(ainavklasem_ligzdotaji, pievienot)
 
 
 #XX Izeksportet preferences
-write.csv(noverojumi_apkopots, "./atlase/noverojumi_apkopots.csv", row.names = FALSE)
-write.csv(ligzdotaji_apkopots, "./atlase/ligzdotaji_apkopots.csv", row.names = FALSE)
+#write.csv(noverojumi_apkopots, "./atlase/noverojumi_apkopots.csv", row.names = FALSE)
+#write.csv(ligzdotaji_apkopots, "./atlase/ligzdotaji_apkopots.csv", row.names = FALSE)
 
 
 
@@ -329,7 +329,7 @@ df_final <- df_sugas %>%
   left_join(df_ligzd_putni, by = c("sugaLV", "sugaZIN"))
 
 # Saglabājam rezultātu kā Excel failu
-write_xlsx(df_final, "./atlase/preferences.xlsx")
+write_xlsx(df_final, "./IevadesDati/preferences.xlsx")
 
 
 
