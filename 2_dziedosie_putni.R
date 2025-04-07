@@ -117,7 +117,7 @@ grafiks_3 <- ggplot(na.omit(putni[, c("population_method.text", "population_size
     estimatePartial = "Daļējs novērtējums\nPartial estimate",
     completeSurvey = "Pilnīgs novērtējums\nComplete Survey"
   )) +
-  xlab("Datu kvalitātes klase / Data quality class") +
+  xlab("Populācijas lieluma datu kvalitātes klase / Population size data quality class") +
   ylab("Populācijas lielums / Population size") +
   theme_classic() +
   EnvStats::stat_n_text(vjust = -0.5) +
