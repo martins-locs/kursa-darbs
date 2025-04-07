@@ -39,13 +39,13 @@ for (skaitlis in ainavas) {
 
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
-                                        "Ceļi / Roads" = "100",
-                                        "Ūdeņi / Waters" = "200",
-                                        "Aramzeme / Agricultural land" = "310",
-                                        "Meži / Forests" = "610",
-                                        "Purvi / Marshes" = "710",
-                                        "Niedrāji / Reedbeds" = "720",
-                                        "Smiltāji / Sandbanks" = "800"
+                                        "Ceļi\nRoads" = "100",
+                                        "Ūdeņi\nWaters" = "200",
+                                        "Aramzeme\nAgricultural land" = "310",
+                                        "Meži\nForests" = "610",
+                                        "Purvi\nMarshes" = "710",
+                                        "Niedrāji\nReedbeds" = "720",
+                                        "Smiltāji\nSandbanks" = "800"
 )
 
 ggplot(data = putni_dzied_ainava) +
@@ -243,19 +243,19 @@ for (skaitlis in ainavas) {
 
 vektors=c(0.01,0.1,0.5,1,2,10)
 prognoze_100=as.data.frame(ggeffects::ggpredict(modelis_100,terms=c("Ligzd_Putnu_100[vektors]","akustiski.grupa")))
-prognoze_100$veids="Ceļi / Roads"
+prognoze_100$veids="Ceļi\nRoads"
 prognoze_200=as.data.frame(ggeffects::ggpredict(modelis_200,terms=c("Ligzd_Putnu_200[vektors]","akustiski.grupa")))
-prognoze_200$veids="Ūdeņi / Waters"
+prognoze_200$veids="Ūdeņi\nWaters"
 prognoze_310=as.data.frame(ggeffects::ggpredict(modelis_310,terms=c("Ligzd_Putnu_310[vektors]","akustiski.grupa")))
-prognoze_310$veids="Aramzeme / Agricultural land"
+prognoze_310$veids="Aramzeme\nAgricultural land"
 prognoze_610=as.data.frame(ggeffects::ggpredict(modelis_610,terms=c("Ligzd_Putnu_610[vektors]","akustiski.grupa")))
-prognoze_610$veids="Meži / Forests"
+prognoze_610$veids="Meži\nForests"
 prognoze_710=as.data.frame(ggeffects::ggpredict(modelis_710,terms=c("Ligzd_Putnu_710[vektors]","akustiski.grupa")))
-prognoze_710$veids="Purvi / Marshes"
+prognoze_710$veids="Purvi\nMarshes"
 prognoze_720=as.data.frame(ggeffects::ggpredict(modelis_720,terms=c("Ligzd_Putnu_720[vektors]","akustiski.grupa")))
-prognoze_720$veids="Niedrāji / Reedbeds"
+prognoze_720$veids="Niedrāji\nReedbeds"
 prognoze_800=as.data.frame(ggeffects::ggpredict(modelis_800,terms=c("Ligzd_Putnu_800[vektors]","akustiski.grupa")))
-prognoze_800$veids="Smiltāji / Sandbanks"
+prognoze_800$veids="Smiltāji\nSandbanks"
 
 
 visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze_710,prognoze_720,prognoze_800)
@@ -266,7 +266,7 @@ visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze
 #theme_classic()
 
 
-visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Ceļi / Roads", "Ūdeņi / Waters", "Aramzeme / Agricultural land", "Meži / Forests", "Purvi / Marshes", "Niedrāji / Reedbeds", "Smiltāji / Sandbanks"))
+visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Ceļi\nRoads", "Ūdeņi\nWaters", "Aramzeme\nAgricultural land", "Meži\nForests", "Purvi\nMarshes", "Niedrāji\nReedbeds", "Smiltāji\nSandbanks"))
 
 ggplot(visi_prognoze, aes(factor(x), predicted,
                           ymin = conf.low, ymax = conf.high,
@@ -343,9 +343,8 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA, size = 0.5),
     strip.background = element_blank(),
-    strip.text = element_text(color = "black", face = "bold", size = 7),
+    strip.text = element_text(color = "black", face = "bold", size = 10),
     axis.text.x = element_blank(),
-    axis.text.y = element_text(size = 8),
     legend.position = "bottom",
     legend.text = element_text(size = 9.5)
   ) +
@@ -414,7 +413,7 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, fill = Kolonna))
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA, size = 0.5),
     strip.background = element_blank(),
-    strip.text = element_text(color = "black", face = "bold", size = 7),
+    strip.text = element_text(color = "black", face = "bold", size = 10),
     axis.text.x = element_blank(),
     axis.text.y = element_text(size = 8),
     legend.position = "bottom",
