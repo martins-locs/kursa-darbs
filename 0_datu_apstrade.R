@@ -1,4 +1,4 @@
-# 1. library ----
+# 1. bibliotēkas ----
 library(tidyverse)
 library(terra)
 library(sf)
@@ -7,7 +7,7 @@ library(writexl)
 library(openxlsx)
 
 
-# 2. dati ----
+# 2. datu ielāde ----
 Sys.setlocale("LC_NUMERIC", "C")
 ainava=terra::rast("../IevadesDati/Ainava_vienk_mask.tif")
 
@@ -378,7 +378,7 @@ for(i in seq_along(zinatniskie)){
     dplyr::select(sugaLV, sugaZIN, klase, pref_SugasIetvaros, pref_PutnuIetvaros,pref_Putniem) %>% 
     pivot_longer(cols = pref_SugasIetvaros:pref_Putniem,
                  names_to = "veids", values_to = "vertiba") %>% 
-    mutate(tips="Ligzdotāji\nAmong nesters\n")
+    mutate(tips="Ligzdotāji\nAmong breeders\n")
   
   print("apvienosana attēlam")
   dati_attelam=rbind(dati_all2,dati_ligzdotaji2)
@@ -387,21 +387,21 @@ for(i in seq_along(zinatniskie)){
                                    klase=NA,
                                    veids="pref_Putniem",
                                    vertiba=NA,
-                                   tips="Ligzdotāji\nAmong nesters\n")
+                                   tips="Ligzdotāji\nAmong breeders\n")
   dati_attelam2=rbind(dati_attelam,pievienot_ligzdotajus)
   
   dati_attelam2$klase <- recode(dati_attelam2$klase,
-                                "100" = "Ceļi\nRoads",
+                                "100" = "Mākslīgās virsmas\nBuilt-up",
                                 "200" = "Ūdeņi\nWaters",
-                                "310" = "Aramzeme\nAgricultural land",
+                                "310" = "Lauksaimniecības\nzemes\nFarmlands\n",
                                 "610" = "Meži\nForests",
-                                "710" = "Purvi\nMarshes",
+                                "710" = "Purvi\nBogs",
                                 "720" = "Niedrāji\nReedbeds",
-                                "800" = "Smiltāji\nSandbanks"
+                                "800" = "Pārējie\nSandbanks"
                                 )
   
   dati_attelam2$klase <- factor(dati_attelam2$klase,
-                                levels = c("Ceļi\nRoads", "Ūdeņi\nWaters", "Aramzeme\nAgricultural land", "Meži\nForests", "Purvi\nMarshes", "Niedrāji\nReedbeds", "Smiltāji\nSandbanks"))
+                                levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības\nzemes\nFarmlands\n", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nSandbanks"))
   
   
   unique(dati_attelam2$klase)
@@ -427,7 +427,7 @@ for(i in seq_along(zinatniskie)){
     geom_point(position = position_jitterdodge(jitter.width = 0.01, jitter.height = 0), size = 2) +
     theme_classic() +
     scale_y_log10() +
-    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong nesters\n" = 17),drop=FALSE) + 
+    scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong breeders\n" = 17),drop=FALSE) + 
     scale_color_manual("Preference",
                        values = c("pref_Putniem" = "grey",
                                   "pref_SugasIetvaros" = "#56B4E9",
