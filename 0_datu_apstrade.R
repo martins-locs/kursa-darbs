@@ -115,6 +115,10 @@ klasu_platibas <- klasu_platibas %>%
 noverojumi3 <- noverojumi2 %>%
   left_join(klasu_platibas, by = c("klase" = "value"))
 
+klasu_skaits <- noverojumi3 %>%
+  group_by(klase) %>%
+  summarise(skaits = n())
+
 
 ## 3.3. Noverojumi apkopots ----
 noverojumi_apkopots=data.frame(noverojumi3) %>% 
