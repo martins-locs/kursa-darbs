@@ -397,11 +397,11 @@ for(i in seq_along(zinatniskie)){
                                 "610" = "Meži\nForests",
                                 "710" = "Purvi\nBogs",
                                 "720" = "Niedrāji\nReedbeds",
-                                "800" = "Pārējie\nSandbanks"
+                                "800" = "Pārējie\nOthers"
                                 )
   
   dati_attelam2$klase <- factor(dati_attelam2$klase,
-                                levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības\nzemes\nFarmlands\n", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nSandbanks"))
+                                levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības\nzemes\nFarmlands\n", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nOthers"))
   
   
   unique(dati_attelam2$klase)
