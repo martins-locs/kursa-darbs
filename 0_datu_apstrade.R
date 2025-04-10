@@ -82,8 +82,8 @@ klasu_platibas=klasu_platibas %>%
 
 
 
-#save.image(file = "./IevadesDati/my_environment.RData")
-load("./IevadesDati/my_environment.RData")
+#save.image(file = "../IevadesDati/my_environment.RData")
+load("../IevadesDati/my_environment.RData")
 
 #write.xlsx(klasu_platibas, "klasu_platibas.xlsx", overwrite = TRUE)
 
