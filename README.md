@@ -33,4 +33,6 @@
 - `Putnu_sugu_akustiska_kvalitate.jpg` — Akustisko signālu nozīmes sugu novērojumos (D-B attiecība) saistībā ar populācijas lieluma informācijas kvalitāti un aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
 - `prognoze.jpg` — Prognozētā varbūtība uzlabot informācijas par putnu populācijām kvalitāti, atkarībā no sugas akustiskuma un preferences izmantotajām ainavas klasēm.
 
+##
+
 Visas komandu rindas šajā repozitorijā ir pārbaudītas 2025-04-10 pieejamajā versijā.
