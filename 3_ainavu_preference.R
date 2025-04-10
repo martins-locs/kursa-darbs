@@ -41,46 +41,12 @@ putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
                                         "Mākslīgās virsmas\nBuilt-up" = "100",
                                         "Ūdeņi\nWaters" = "200",
-                                        "Lauksaimniecības\nzemes\nFarmlands" = "310",
+                                        "Lauksaimniecības zemes\nFarmlands" = "310",
                                         "Meži\nForests" = "610",
                                         "Purvi\nBogs" = "710",
                                         "Niedrāji\nReedbeds" = "720",
                                         "Pārējie\nOthers" = "800"
 )
-
-ggplot(data = putni_dzied_ainava) +
-  #geom_point(aes(x = Sugas, y = Dzied.Biotopa.attieciba, color = "Sugas"), shape = 1, size = 1, alpha = 1, na.rm = TRUE) +
-  #geom_point(aes(x = Putnu, y = Dzied.Biotopa.attieciba, color = "Putnu"), shape = 1, size = 1, alpha = 1, na.rm = TRUE) +
-  #geom_point(aes(x = Ligzd_Sugas, y = Dzied.Biotopa.attieciba, color = "Ligzd_Sugas"), shape = 2, size = 1, alpha = 1, na.rm = TRUE) +
-  geom_point(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, color = "Ligzd_Putnu"), shape = 1, size = 1, na.rm = TRUE) +
-  
-  #geom_smooth(aes(x = Sugas, y = Dzied.Biotopa.attieciba, color = "Sugas tendence"), method = "loess", se = FALSE) +
-  #geom_smooth(aes(x = Putnu, y = Dzied.Biotopa.attieciba, color = "Putnu tendence"), method = "loess", se = FALSE) +
-  #geom_smooth(aes(x = Ligzd_Sugas, y = Dzied.Biotopa.attieciba, color = "Ligzd_Sugas tendence"), method = "loess", se = FALSE) +
-  geom_smooth(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, color = "Ligzd_Putnu tendence"), size = 0.5, method = "loess", se = FALSE) +
-  
-  scale_x_log10(labels = scales::label_log()) +
-  scale_y_log10(labels = scales::label_log()) +
-  
-  facet_wrap(~ Ainava, scales = "free_y", nrow = 2) +  
-  labs(x = "Preference ainavas klasē / Preference in landscape class", y = "D/B pazīmju attiecība / D/B trait ratio") +
-  
-  ggthemes::scale_color_colorblind() +
-  
-  theme_classic() +
-  geom_hline(yintercept = 1, lty = 3) +
-  geom_hline(yintercept = 0.1, lty = 3) +
-  geom_vline(xintercept = 1, lty = 3) +
-  theme(
-    panel.grid = element_blank(),
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    legend.position = "none",
-    panel.border = element_rect(color = "black", fill = NA, size = 0.5),
-    strip.background = element_blank(),
-    strip.text = element_text(face = "bold")
-  )
-
-
 
 
 putni_dzied_ainava <- putni_dzied_ainava %>%
@@ -117,7 +83,7 @@ punktu_skaits_kvadratos <- punktu_skaits_kvadratos %>%
     )
   )
 
-# Attēlojam datus ar punktu skaitu katrā kvadrātā
+
 ggplot(data = putni_dzied_ainava) +
   geom_point(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, 
                  color = "Ligzd_Putnu", shape = population_method.text), 
@@ -147,7 +113,7 @@ ggplot(data = putni_dzied_ainava) +
   
   geom_text(data = punktu_skaits_kvadratos, 
             aes(x = x_text, y = y_text, label = paste("n =", punktu_skaits)), 
-            color = "#56B4E9", size = 3, fontface = "bold", inherit.aes = FALSE) +
+            color = "darkgrey", size = 3, fontface = "bold", inherit.aes = FALSE) +
   
   theme(
     panel.grid = element_blank(),
@@ -247,7 +213,7 @@ prognoze_100$veids="Mākslīgās virsmas\nBuilt-up"
 prognoze_200=as.data.frame(ggeffects::ggpredict(modelis_200,terms=c("Ligzd_Putnu_200[vektors]","akustiski.grupa")))
 prognoze_200$veids="Ūdeņi\nWaters"
 prognoze_310=as.data.frame(ggeffects::ggpredict(modelis_310,terms=c("Ligzd_Putnu_310[vektors]","akustiski.grupa")))
-prognoze_310$veids="Lauksaimniecības\nzemes\nFarmlands"
+prognoze_310$veids="Lauksaimniecības zemes\nFarmlands"
 prognoze_610=as.data.frame(ggeffects::ggpredict(modelis_610,terms=c("Ligzd_Putnu_610[vektors]","akustiski.grupa")))
 prognoze_610$veids="Meži\nForests"
 prognoze_710=as.data.frame(ggeffects::ggpredict(modelis_710,terms=c("Ligzd_Putnu_710[vektors]","akustiski.grupa")))
@@ -266,7 +232,7 @@ visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze
 #theme_classic()
 
 
-visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības\nzemes\nFarmlands", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nOthers"))
+visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības zemes\nFarmlands", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nOthers"))
 
 ggplot(visi_prognoze, aes(factor(x), predicted,
                           ymin = conf.low, ymax = conf.high,
@@ -322,14 +288,14 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
   
   scale_color_manual(
     values = c(
-      "Sugas" = "#F0E442",
-      "Putnu" = "#009E73",
-      "Ligzd_Sugas" = "#56B4E9",
-      "Ligzd_Putnu" = "#E69F00"
+      "Sugas" = "#C84A4A",
+      "Putnu" = "#4A70C8",
+      "Ligzd_Sugas" = "#C89A9A",
+      "Ligzd_Putnu" = "#8A9AB3"
     ),
     labels = c(
-      "Visu sugu ietvaros (ligzdotāji)\nWithin all species (nesters)",
-      "Savas sugas ietvaros (ligzdotāji)\nWithin one's own species (nesters)",
+      "Visu sugu ietvaros (ligzdotāji)\nWithin all species (breeders)",
+      "Savas sugas ietvaros (ligzdotāji)\nWithin one's own species (breeders)",
       "Visu sugu ietvaros (visi novērojumi)\nWithin all species (all observations)",
       "Savas sugas ietvaros (visi novērojumi)\nWithin one's own species (all observations)"
     )

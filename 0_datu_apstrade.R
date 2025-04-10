@@ -440,8 +440,8 @@ for(i in seq_along(zinatniskie)){
     scale_shape_manual("Grupa / Group", values = c("Visi novērojumi\nAll observations" = 16, "Ligzdotāji\nAmong breeders\n" = 17),drop=FALSE) + 
     scale_color_manual("Preference",
                        values = c("pref_Putniem" = "grey",
-                                  "pref_SugasIetvaros" = "#56B4E9",
-                                  "pref_PutnuIetvaros" = "#E69F00"),
+                                  "pref_SugasIetvaros" = "#C80000",
+                                  "pref_PutnuIetvaros" = "#0045C8"),
                        labels = c("Visi putnu novērojumi\nAll bird sightings\n",
                                   "Visu sugu ietvaros\nWithin all species\n",
                                   "Savas sugas ietvaros\nWithin one's own species"

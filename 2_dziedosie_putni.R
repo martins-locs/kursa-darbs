@@ -26,22 +26,28 @@ putni$population_method.text <- factor(
 )
 
 grafiks_1 <- ggplot(na.omit(putni[, c("population_method.text", "Dzied.Biotopa.attieciba")]), 
-                    aes(x = population_method.text, y = Dzied.Biotopa.attieciba)) +
+                    aes(x = population_method.text, y = Dzied.Biotopa.attieciba, fill = population_method.text)) +
   geom_hline(yintercept = 1, lty = 3, color = "grey", linewidth = 0.5) + 
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
+  geom_violin(alpha = 0.5) + 
+  geom_boxplot(width = 0.2, color = "black", outlier.shape = NA) +
   scale_y_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000), labels = scales::label_log()) +
   scale_x_discrete(labels = c(
     estimateExpert = "Ekspertu novērtējums\nExpert estimate\n",
     estimatePartial = "Daļējs novērtējums\nPartial estimate",
     completeSurvey = "Pilnīgs novērtējums\nComplete Survey"
   )) +
+  scale_fill_manual(values = c(
+    estimateExpert = "#A89F94",
+    estimatePartial = "#9C8771",
+    completeSurvey = "#8C6239"
+  )) +
   xlab("Populācijas lieluma datu kvalitātes klase / Population size data quality class") +
   ylab("D-B pazīmju attiecība / D-B trait ratio") +
   theme_classic() +
   EnvStats::stat_n_text() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10)
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    legend.position = "none"
   )
 
 print(grafiks_1)
@@ -66,10 +72,10 @@ putni$population_estimate_type.text <- factor(
 )
 
 grafiks_2 <- ggplot(na.omit(putni[, c("population_estimate_type.text", "Dzied.Biotopa.attieciba")]), 
-                    aes(x = population_estimate_type.text, y = Dzied.Biotopa.attieciba)) +
+                    aes(x = population_estimate_type.text, y = Dzied.Biotopa.attieciba, fill = population_estimate_type.text)) +
   geom_hline(yintercept = 1, lty = 3, color = "grey", linewidth = 0.5) + 
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
+  geom_violin(alpha = 0.5) + 
+  geom_boxplot(width = 0.2, color = "black", outlier.shape = NA) +
   scale_y_log10(
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000),
     labels = scales::label_log()
@@ -79,14 +85,22 @@ grafiks_2 <- ggplot(na.omit(putni[, c("population_estimate_type.text", "Dzied.Bi
     estimate = "Aptuvenais novērtējums\nEstimate",
     interval = "95% ticamības intervāls\n95% confidence interval"
   )) +
+  scale_fill_manual(values = c(
+    Minimum = "#C1BEB7",
+    estimate = "#A49382",
+    interval = "#7A5F48"
+  )) +
   xlab("Populāciju aprēķina veids / Population calculation method") +
   ylab("D-B pazīmju attiecība / D-B trait ratio") +
   theme_classic() +
   EnvStats::stat_n_text() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10)
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    legend.position = "none"
   )
+
 print(grafiks_2)
+
 
 kruskal_test <- kruskal.test(Dzied.Biotopa.attieciba ~ population_estimate_type.text, data = putni)
 kruskal_test
@@ -108,22 +122,29 @@ putni$population_method.text <- factor(
 )
 
 grafiks_3 <- ggplot(na.omit(putni[, c("population_method.text", "population_size")]), 
-                    aes(x = population_method.text, y = population_size)) +
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
+                    aes(x = population_method.text, y = population_size, fill = population_method.text)) +
+  geom_violin(alpha = 0.5) + 
+  geom_boxplot(width = 0.2, color = "black", outlier.shape = NA) +
   scale_y_log10(breaks = c(1, 10, 100, 1000, 10000, 100000, 1000000), labels = scales::label_log()) +
   scale_x_discrete(labels = c(
     estimateExpert = "Ekspertu novērtējums\nExpert estimate\n",
     estimatePartial = "Daļējs novērtējums\nPartial estimate",
     completeSurvey = "Pilnīgs novērtējums\nComplete Survey"
   )) +
+  scale_fill_manual(values = c(
+    estimateExpert = "#A89F94",
+    estimatePartial = "#9C8771",
+    completeSurvey = "#8C6239"
+  )) +
   xlab("Populācijas lieluma datu kvalitātes klase / Population size data quality class") +
   ylab("Populācijas lielums / Population size") +
   theme_classic() +
   EnvStats::stat_n_text(vjust = -0.5) +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10)
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    legend.position = "none"
   )
+
 print(grafiks_3)
 
 kruskal_test <- kruskal.test(population_size ~ population_method.text, data = putni)
@@ -144,22 +165,31 @@ putni$population_estimate_type.text <- factor(
 )
 
 grafiks_4 <- ggplot(na.omit(putni[, c("population_estimate_type.text", "population_size")]), 
-                    aes(x = population_estimate_type.text, y = population_size)) +
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
+                    aes(x = population_estimate_type.text, y = population_size, fill = population_estimate_type.text)) +
+  geom_violin(alpha = 0.5) + 
+  geom_boxplot(width = 0.2, color = "black", outlier.shape = NA) +
   scale_y_log10(breaks = c(1, 10, 100, 1000, 10000, 100000, 1000000), labels = scales::label_log()) +
   scale_x_discrete(labels = c(
     Minimum = "Minimālā vērtība\nMinimum value\n",
     estimate = "Aptuvenais novērtējums\nEstimate",
     interval = "95% ticamības intervāls\n95% confidence interval"
   )) +
+  scale_fill_manual(values = c(
+    Minimum = "#C1BEB7",
+    estimate = "#A49382",
+    interval = "#7A5F48"
+  )) +
   xlab("Populāciju aprēķina veids / Population calculation method") +
   ylab("Populācijas lielums / Population size") +
   theme_classic() +
   EnvStats::stat_n_text(vjust = -0.5) +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 10)
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    legend.position = "none"
   )
+
+print(grafiks_4)
+
 print(grafiks_4)
 
 kruskal_test <- kruskal.test(population_size ~ population_estimate_type.text, data = putni)
