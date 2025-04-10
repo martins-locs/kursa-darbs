@@ -39,13 +39,13 @@ for (skaitlis in ainavas) {
 
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
-                                        "Ceļi\nRoads" = "100",
+                                        "Mākslīgās virsmas\nBuilt-up" = "100",
                                         "Ūdeņi\nWaters" = "200",
-                                        "Aramzeme\nAgricultural land" = "310",
+                                        "Lauksaimniecības\nzemes\nFarmlands" = "310",
                                         "Meži\nForests" = "610",
-                                        "Purvi\nMarshes" = "710",
+                                        "Purvi\nBogs" = "710",
                                         "Niedrāji\nReedbeds" = "720",
-                                        "Smiltāji\nSandbanks" = "800"
+                                        "Pārējie\nOthers" = "800"
 )
 
 ggplot(data = putni_dzied_ainava) +
@@ -243,19 +243,19 @@ for (skaitlis in ainavas) {
 
 vektors=c(0.01,0.1,0.5,1,2,10)
 prognoze_100=as.data.frame(ggeffects::ggpredict(modelis_100,terms=c("Ligzd_Putnu_100[vektors]","akustiski.grupa")))
-prognoze_100$veids="Ceļi\nRoads"
+prognoze_100$veids="Mākslīgās virsmas\nBuilt-up"
 prognoze_200=as.data.frame(ggeffects::ggpredict(modelis_200,terms=c("Ligzd_Putnu_200[vektors]","akustiski.grupa")))
 prognoze_200$veids="Ūdeņi\nWaters"
 prognoze_310=as.data.frame(ggeffects::ggpredict(modelis_310,terms=c("Ligzd_Putnu_310[vektors]","akustiski.grupa")))
-prognoze_310$veids="Aramzeme\nAgricultural land"
+prognoze_310$veids="Lauksaimniecības\nzemes\nFarmlands"
 prognoze_610=as.data.frame(ggeffects::ggpredict(modelis_610,terms=c("Ligzd_Putnu_610[vektors]","akustiski.grupa")))
 prognoze_610$veids="Meži\nForests"
 prognoze_710=as.data.frame(ggeffects::ggpredict(modelis_710,terms=c("Ligzd_Putnu_710[vektors]","akustiski.grupa")))
-prognoze_710$veids="Purvi\nMarshes"
+prognoze_710$veids="Purvi\nBogs"
 prognoze_720=as.data.frame(ggeffects::ggpredict(modelis_720,terms=c("Ligzd_Putnu_720[vektors]","akustiski.grupa")))
 prognoze_720$veids="Niedrāji\nReedbeds"
 prognoze_800=as.data.frame(ggeffects::ggpredict(modelis_800,terms=c("Ligzd_Putnu_800[vektors]","akustiski.grupa")))
-prognoze_800$veids="Smiltāji\nSandbanks"
+prognoze_800$veids="Pārējie\nOthers"
 
 
 visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze_710,prognoze_720,prognoze_800)
@@ -266,7 +266,7 @@ visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze
 #theme_classic()
 
 
-visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Ceļi\nRoads", "Ūdeņi\nWaters", "Aramzeme\nAgricultural land", "Meži\nForests", "Purvi\nMarshes", "Niedrāji\nReedbeds", "Smiltāji\nSandbanks"))
+visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības\nzemes\nFarmlands", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nOthers"))
 
 ggplot(visi_prognoze, aes(factor(x), predicted,
                           ymin = conf.low, ymax = conf.high,
@@ -282,7 +282,8 @@ ggplot(visi_prognoze, aes(factor(x), predicted,
   theme(
     panel.border = element_rect(color = "black", fill = NA, size = 0.5),
     strip.background = element_blank(),
-    strip.text = element_text(face = "bold")
+    strip.text = element_text(face = "bold"),
+    legend.key.height = unit(1, "cm")
   )
 
 ggsave(filename = "./Rezultati/prognoze.jpg", 
@@ -309,7 +310,7 @@ putni_dzied_ainava_long <- pivot_longer(putni_dzied_ainava,
 
 putni_dzied_ainava_long$Kolonna <- factor(
   putni_dzied_ainava_long$Kolonna,
-  levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")  # <-- tava izvēlētā secība
+  levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")
 )
 
 
@@ -360,83 +361,10 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
   guides(color = guide_legend(title = NULL))
 
 
-ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference_1.jpg", 
+ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference.jpg", 
        plot = last_plot(),
        height = 1800, 
        width = 3150, 
        dpi = 300, 
        units = "px", 
        device = "jpg")
-
-
-
-
-
-
-
-
-
-
-
-
-putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
-putni_dzied_ainava_long <- pivot_longer(putni_dzied_ainava, 
-                                        cols = c(Sugas, Putnu, Ligzd_Sugas, Ligzd_Putnu),
-                                        names_to = "Kolonna", 
-                                        values_to = "Vērtība")
-
-colorblind_palette <- colorblind_pal()(8)[2:8]
-
-ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, fill = Kolonna)) +
-  
-  geom_violin(trim = FALSE, alpha = 0.5) +
-  geom_boxplot(width = 0.2, color = "black", alpha = 0.8) +
-  
-  geom_hline(yintercept = 1, lty = 3, size = 0.5) +
-  
-  scale_fill_manual(values = colorblind_palette) +
-  
-  scale_fill_manual(
-    values = colorblind_palette,
-    labels = c(
-      "Visu sugu ietvaros (ligzdotāji)\nWithin all species (nesters)",
-      "Savas sugas ietvaros (ligzdotāji)\nWithin one's own species (nesters)",
-      "Visu sugu ietvaros (visi novērojumi)\nWithin all species (all observations)",
-      "Savas sugas ietvaros (visi novērojumi)\nWithin one's own species (all observations)"
-    )
-  ) +
-  
-  scale_y_log10(
-    labels = scales::label_log(),
-    breaks = c(0.01, 0.1, 1, 10, 100, 1000)
-  ) +
-  
-  xlab(NULL) +
-  ylab("Preference ainavas klasē / Preference in landscape class") +
-  
-  theme_classic() +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    panel.border = element_rect(color = "black", fill = NA, size = 0.5),
-    strip.background = element_blank(),
-    strip.text = element_text(color = "black", face = "bold", size = 10),
-    axis.text.x = element_blank(),
-    axis.text.y = element_text(size = 8),
-    legend.position = "bottom",
-    legend.text = element_text(size = 9.5)
-  ) +
-  facet_wrap(~ Ainava, nrow = 1, scales = "fixed") +
-  EnvStats::stat_n_text(vjust = -0.5, size = 2.5) +
-  guides(fill = guide_legend(title = NULL))
-
-
-
-
-ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference_2.jpg", 
-       plot = last_plot(),
-       height = 1800, 
-       width = 3150, 
-       dpi = 300, 
-       units = "px", 
-       device = "jpg")
-

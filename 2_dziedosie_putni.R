@@ -171,62 +171,6 @@ knitr::kable(rstatix::dunn_test(population_size ~ population_estimate_type.text,
 #Visos salīdzinājumos, izņemot "Minimum" un "estimate" grupu, ir novērotas statistiski nozīmīgas atšķirības attiecībā uz populācijas izmēru.
 
 
-# 5. Grafiks ----
-
-putni$population_trend.text <- factor(
-  putni$population_trend.text,
-  levels = c("UNK", "U", "D", "S", "I")
-)
-
-grafiks_5 <- ggplot(na.omit(putni[, c("population_trend.text", "Dzied.Biotopa.attieciba")]), 
-                    aes(x = population_trend.text, y = Dzied.Biotopa.attieciba)) +
-  geom_hline(yintercept = 1, lty = 3, color = "grey", linewidth = 0.5) + 
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
-  scale_y_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000), labels = scales::label_log()) +
-  scale_x_discrete(labels = c(
-    UNK = "Nezināma\nUnknown",
-    U = "Neskaidra\nUncertain",
-    D = "Samazinās\nDecreasing",
-    S = "Stabila\nStable",
-    I = "Pieaug\nIncreasing"
-  )) +
-  xlab("Īsstermiņa populāciju tendence / Short-term population trend") +
-  ylab("D-B pazīmju attiecība / D-B trait ratio") +
-  theme_classic() +
-  EnvStats::stat_n_text()
-print(grafiks_5)
-
-
-
-
-# 6. Grafiks ----
-
-putni$population_trend_long.text <- factor(
-  putni$population_trend_long.text,
-  levels = c("UNK", "U", "D", "S", "I")
-)
-
-grafiks_6 <- ggplot(na.omit(putni[, c("population_trend_long.text", "Dzied.Biotopa.attieciba")]), 
-                    aes(x = population_trend_long.text, y = Dzied.Biotopa.attieciba)) +
-  geom_hline(yintercept = 1, lty = 3, color = "grey", linewidth = 0.5) + 
-  geom_violin(fill = "lightgrey", alpha = 0.5) + 
-  geom_boxplot(width = 0.2, fill = "#E69F00", color = "black") +
-  scale_y_log10(breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000), labels = scales::label_log()) +
-  scale_x_discrete(labels = c(
-    UNK = "Nezināma\nUnknown",
-    U = "Neskaidra\nUncertain",
-    D = "Samazinās\nDecreasing",
-    S = "Stabila\nStable",
-    I = "Pieaug\nIncreasing"
-  )) +
-  xlab("Ilgtermiņa populāciju tendence / Long-term population trend") +
-  ylab("D-B pazīmju attiecība / D-B trait ratio") +
-  theme_classic() +
-  EnvStats::stat_n_text()
-print(grafiks_6)
-
-
 
 
 grafiks_1 | grafiks_2
@@ -251,17 +195,3 @@ ggsave(filename = "./Rezultati/Putnu_populacija_monitorings.jpg",
        dpi = 300, 
        units = "px", 
        device = "jpg")
-
-
-
-
-grafiks_5 | grafiks_6
-
-ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_tendence.jpg", 
-       plot = last_plot(),
-       height = 1800, 
-       width = 3150, 
-       dpi = 300, 
-       units = "px", 
-       device = "jpg")
-
