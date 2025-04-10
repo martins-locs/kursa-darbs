@@ -26,7 +26,7 @@
 - `putni.xlsx` un `putni_SkaitiPazimes_kops2016.xlsx` — strukturētie dati par ligzdojošo putnu sugām Latvijā un to pazīmēm.
 
 ### Rezultāti/
-Vizualizācijas un attēli, kas ilustrē galvenos darba rezultātus:
+Šī mapes saturs vizualizācijas, kas ilustrē galvenos darba rezultātus:
 - `Putnu_populacija_monitorings.jpg` — Putnu sugu populāciju lielumu sadalījums atkarībā no populācijas lieluma datu kvalitātes klases un populāciju aprēķina veida.
 - `Putnu_sugu_ainavu_preference.jpg` — Preference ainavas klasēm divos aprēķinu veidos un atsevišķi izdalītiem uz ligzdošanu attiecināmajiem novērojumiem katrā no tiem.
 - `Putnu_sugu_akustiska_ainava.jpg` — Ligzdojošo putnu sugu D-B pazīmju attiecība atkarībā no preferences ainavas klasēm (attēla daļās), norādot putnu sugas populāciju datu kvalitātes klasi.
