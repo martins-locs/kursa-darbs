@@ -16,6 +16,17 @@ noverojumi0=read_sf("../IevadesDati/martinam_dabasdati.gpkg",
                     layer="putni_dabasdati_2023")
 noverojumi0=st_transform(noverojumi0,crs=st_crs(ainava))
 
+noverojumi0 <- noverojumi0 %>%
+  mutate(sugaZIN = trimws(sugaZIN),
+         sugaZIN = str_replace(sugaZIN, " f. domestica", ""),
+         sugaZIN = sapply(str_split(sugaZIN, " "), function(x) {
+           if (length(x) == 3) paste(x[1], x[2]) else paste(x, collapse = " ")
+         }))
+
+noverojumi0 <- noverojumi0 %>%
+  filter(!str_detect(sugaLV, " sp\\.") & !str_detect(sugaLV, "/") &
+           !str_detect(sugaZIN, " sp\\.") & !str_detect(sugaZIN, "/"))
+
 
 
 
@@ -67,7 +78,6 @@ klasu_platibas=klasu_platibas %>%
 
 #klasu_platibas=klasu_platibas %>% 
 #  dplyr::select(-layer)
-
 
 
 
@@ -449,3 +459,4 @@ for(i in seq_along(zinatniskie)){
   faila_nosaukums = paste0("../atteli/", zinatniskais_clean, ".png")
   ggsave(attels, filename = faila_nosaukums, height = 1800, width = 2700, dpi = 300, units = "px", device = "png")
 }
+
