@@ -13,11 +13,15 @@ putni <- read_excel("./IevadesDati/putni.xlsx")
 
 ainavas <- c(100, 200, 310, 610, 710, 720, 800)
 
+
+
 putni_dzied_ainava <- data.frame()
 
 for (skaitlis in ainavas) {
   putni_kopa <- putni %>%
     select(speciesname,
+           SkaitsDzied,
+           SkaitsBiotopa,
            Dzied.Biotopa.attieciba,
            population_method.text,
            paste0("Sugas_", skaitlis), 
@@ -35,6 +39,15 @@ for (skaitlis in ainavas) {
 }
 
 
+putni_dzied_ainava_skaitsDzied <- putni_kopa %>%
+  filter(SkaitsBiotopa == 0, SkaitsDzied > 0) %>%
+  summarise(count = n())
+
+putni_dzied_ainava_skaitsBiotopa <- putni_kopa %>%
+  filter(SkaitsDzied == 0, SkaitsBiotopa > 0) %>%
+  summarise(count = n())
+
+
 
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
@@ -49,6 +62,7 @@ putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
 
 
 putni_dzied_ainava <- putni_dzied_ainava %>%
+  filter(!is.na(Ligzd_Putnu), !is.na(Dzied.Biotopa.attieciba)) %>%
   mutate(
     x_statuss = case_when(
       Ligzd_Putnu > 1 ~ "right",
@@ -124,6 +138,9 @@ ggplot(data = putni_dzied_ainava) +
     legend.background = element_rect(color = "black", fill = "white", size = 0.25) 
   ) +
   guides(color = "none", shape = guide_legend(title = "Populāciju lieluma datu kvalitātes klase"))
+
+
+
 
 
 test_results <- list()
@@ -267,17 +284,19 @@ sjPlot::tab_model(modelis_100, modelis_200, modelis_310, modelis_610, modelis_71
 ####
 
 
+
+
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava_long <- pivot_longer(putni_dzied_ainava, 
                                         cols = c(Sugas, Putnu, Ligzd_Sugas, Ligzd_Putnu),
                                         names_to = "Kolonna", 
                                         values_to = "Vērtība")
 
+
 putni_dzied_ainava_long$Kolonna <- factor(
   putni_dzied_ainava_long$Kolonna,
-  levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")
+  levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")  # <-- tava izvēlētā secība
 )
-
 
 ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesname, color = Kolonna)) +
   
