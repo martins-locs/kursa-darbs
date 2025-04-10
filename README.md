@@ -8,16 +8,16 @@
 ### R skripti
 
 - **`0_datu_apstrade.R`**  
-  Importē ainavu klases un apstrādā putnu novērojumu datus, kas nepieciešami tālākai analīzei. Datus filtrē un strukturē, novēršot kļūdas un dublikātus. Tiek apstrādāti putnu novērojumu dati no XML un Excel formāta, datnes tiek konvertētas uz datu rāmjiem, veikta sugu nosaukumu saskaņošana, kā arī sagatavots datu apvienojums ar sugu pazīmēm.
+  Importē ainavu klases un apstrādā putnu novērojumu datus, kas nepieciešami tālākai analīzei. Datus filtrē un strukturē, novēršot kļūdas un dublikātus. Aprēķina taksonu ainavu preferences un rezultāti tiek vizualizēti.
 
 - **`1_tabulas_izveide.R`**  
-  Veido apvienotu un sakārtotu datu tabulu ar būtiskākajiem mainīgajiem no dažādiem avotiem. Tiek savienoti putnu novērojumu dati ar sugu pazīmēm un dziedāšanas īpašībām, pārveidoti mainīgie modeļiem piemērotā formā, kā arī izveidoti papildu indikatori par akustiskām un vizuālām sugām.
+  Veido apvienotu un sakārtotu datu tabulu ar būtiskākajiem mainīgajiem no dažādiem avotiem. Tiek apstrādāti putnu novērojumu dati no XML un Excel formāta, datnes tiek konvertētas uz datu rāmjiem, veikta sugu nosaukumu saskaņošana, kā arī sagatavots datu apvienojums ar sugu pazīmēm.
 
 - **`2_dziedosie_putni.R`**  
-  Atlasa dziedošās putnu sugas, analizē to sadalījumu un saistību ar dažādām ainavu un sugu pazīmēm. Veido dažādas vizualizācijas, piemēram, sugu izplatību dažādos biotopos. Iekļauta arī statistiskā modeļu veidošana, lai identificētu būtiskus mainīgos, kas ietekmē sugu akustisko noteikšanu.
+  Strādā ar putnu akustiskajiem rādītājiem un to saistībām ar populāciju lieluma datu kvalitātēm un to aprēķina veidu.
 
 - **`3_ainavu_preference.R`**  
-  Analizē putnu sugu ainavu preferences, apvienojot sugu datus ar ekspertu vērtējumiem. Tiek veidoti loģistiskās regresijas modeļi, analizēta ainavu tipu ietekme uz sugu klātbūtni un dziedāšanu. Rezultāti tiek vizualizēti, lai izceltu būtiskās ainavu struktūras, kas ietekmē sugu izvēli.
+  Tiek veidoti loģistiskās regresijas modeļi, analizēta ainavu tipu ietekme uz sugu klātbūtni un dziedāšanu. Rezultāti tiek vizualizēti, lai izceltu būtiskās ainavu struktūras, kas ietekmē sugu izvēli.
 
 ### ievades dati/
 Šī mape satur dažādu veidu ievades datus, kas izmantoti datu apstrādei un analīzei:
