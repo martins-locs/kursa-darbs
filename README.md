@@ -19,13 +19,13 @@
 - **`3_ainavu_preference.R`**  
   Tiek veidoti loģistiskās regresijas modeļi, analizēta ainavu tipu ietekme uz sugu klātbūtni un dziedāšanu. Rezultāti tiek vizualizēti, lai izceltu būtiskās ainavu struktūras, kas ietekmē sugu izvēli.
 
-### ievades dati/
+### IevadesDati/
 Šī mape satur dažādu veidu ievades datus, kas izmantoti datu apstrādei un analīzei:
 - `LV_birds_reports_2019.xlsx` un `LV_birds_reports_20191030-151740.xml` — putnu novērojumu dati no 2019. gada.
 - `preferences.xlsx` — dati par ekspertu vērtētajām ainavu preferencēm dažādām sugām.
 - `putni.xlsx` un `putni_SkaitiPazimes_kops2016.xlsx` — strukturētie dati par ligzdojošo putnu sugām Latvijā un to pazīmēm.
 
-### Rezultāti/
+### Rezultati/
 Šī mapes saturs vizualizācijas, kas ilustrē galvenos darba rezultātus:
 - `Putnu_populacija_monitorings.jpg` — Putnu sugu populāciju lielumu sadalījums atkarībā no populācijas lieluma datu kvalitātes klases un populāciju aprēķina veida.
 - `Putnu_sugu_ainavu_preference.jpg` — Preference ainavas klasēm divos aprēķinu veidos un atsevišķi izdalītiem uz ligzdošanu attiecināmajiem novērojumiem katrā no tiem.
