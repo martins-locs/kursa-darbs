@@ -15,7 +15,6 @@ ainavas <- c(100, 200, 310, 610, 710, 720, 800)
 
 putni_dzied_ainava <- data.frame()
 
-# Cikls
 for (skaitlis in ainavas) {
   putni_kopa <- putni %>%
     select(speciesname,
