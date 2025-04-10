@@ -14,7 +14,7 @@
   Veido apvienotu un sakārtotu datu tabulu ar būtiskākajiem mainīgajiem no dažādiem avotiem. Tiek apstrādāti putnu novērojumu dati no XML un Excel formāta, datnes tiek konvertētas uz datu rāmjiem, veikta sugu nosaukumu saskaņošana, kā arī sagatavots datu apvienojums ar sugu pazīmēm.
 
 - **`2_dziedosie_putni.R`**  
-  Strādā ar putnu akustiskajiem rādītājiem un to saistībām ar populāciju lieluma datu kvalitātēm un to aprēķina veidu.
+  Strādā ar putnu akustiskajiem rādītājiem un to saistībām ar īstermiņa populāciju izmaiņu datu kvalitātēm un to aprēķina veidu.
 
 - **`3_ainavu_preference.R`**  
   Tiek veidoti loģistiskās regresijas modeļi, analizēta ainavu tipu ietekme uz sugu klātbūtni un dziedāšanu. Rezultāti tiek vizualizēti, lai izceltu būtiskās ainavu struktūras, kas ietekmē sugu izvēli.
@@ -27,10 +27,10 @@
 
 ### [Rezultati/](./Rezultati/)
 Šī mapes saturs vizualizācijas, kas ilustrē galvenos darba rezultātus:
-- `Putnu_populacija_monitorings.jpg` — Putnu sugu populāciju lielumu sadalījums atkarībā no populācijas lieluma datu kvalitātes klases un populāciju aprēķina veida.
+- `Putnu_populacija_monitorings.jpg` — Putnu sugu populāciju lielumu sadalījums saistībā ar populācijas populācijas īstermiņa pārmaiņu datu kvalitāti un populācijas lieluma aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
 - `Putnu_sugu_ainavu_preference.jpg` — Preference ainavas klasēm divos aprēķinu veidos un atsevišķi izdalītiem uz ligzdošanu attiecināmajiem novērojumiem katrā no tiem.
-- `Putnu_sugu_akustiska_ainava.jpg` — Ligzdojošo putnu sugu D-B pazīmju attiecība atkarībā no preferences ainavas klasēm (attēla daļās), norādot putnu sugas populāciju datu kvalitātes klasi.
-- `Putnu_sugu_akustiska_kvalitate.jpg` — Akustisko signālu nozīmes sugu novērojumos (D-B attiecība) saistībā ar populācijas lieluma informācijas kvalitāti un aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
+- `Putnu_sugu_akustiska_ainava.jpg` — Ligzdojošo putnu sugu D-B pazīmju attiecība atkarībā no preferences ainavas klasēm, norādot putnu sugas populāciju datu kvalitātes klasi.
+- `Putnu_sugu_akustiska_kvalitate.jpg` — Akustisko signālu nozīmes sugu novērojumos (D-B attiecība) saistībā ar populācijas īstermiņa pārmaiņu datu kvalitāti un populācijas lieluma aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
 - `prognoze.jpg` — Prognozētā varbūtība uzlabot informācijas par putnu populācijām kvalitāti, atkarībā no sugas akustiskuma un preferences izmantotajām ainavas klasēm.
 
 ##
