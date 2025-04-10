@@ -23,7 +23,7 @@ for (skaitlis in ainavas) {
            SkaitsDzied,
            SkaitsBiotopa,
            Dzied.Biotopa.attieciba,
-           population_method.text,
+           population_trend_method.text,
            paste0("Sugas_", skaitlis), 
            paste0("Putnu_", skaitlis), 
            paste0("Ligzd_Sugas_", skaitlis), 
@@ -99,7 +99,7 @@ punktu_skaits_kvadratos <- punktu_skaits_kvadratos %>%
 
 ggplot(data = putni_dzied_ainava) +
   geom_point(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, 
-                 color = "Ligzd_Putnu", shape = population_method.text), 
+                 color = "Ligzd_Putnu", shape = population_trend_method.text), 
              size = 1, alpha = 1, na.rm = TRUE) +
   geom_smooth(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, color = "Ligzd_Putnu tendence"), 
               size = 0.5, method = "loess", se = FALSE) +
@@ -113,11 +113,12 @@ ggplot(data = putni_dzied_ainava) +
   
   ggthemes::scale_color_colorblind() +
   
-  scale_shape_manual(values = c("estimateExpert" = 1, 
+  scale_shape_manual(values = c("absentData" = 4,
+                                "estimateExpert" = 3, 
                                 "estimatePartial" = 2,
-                                "completeSurvey" = 3),
-                     breaks = c("estimateExpert", "estimatePartial", "completeSurvey"), 
-                     labels = c("Ekspertu novērtējums\nExpert estimate", "Daļējs novērtējums\nPartial estimate", "Pilnīgs novērtējums\nComplete Survey")) +  # Maina formu nosaukumus
+                                "completeSurvey" = 1),
+                     breaks = c("absentData", "estimateExpert", "estimatePartial", "completeSurvey"), 
+                     labels = c("Datu iztrūkst\nAbsent Data", "Ekspertu novērtējums\nExpert estimate", "Daļējs novērtējums\nPartial estimate", "Pilnīgs novērtējums\nComplete Survey")) +  # Maina formu nosaukumus
   
   theme_classic() +
   geom_hline(yintercept = 1, lty = 3) +
@@ -137,7 +138,7 @@ ggplot(data = putni_dzied_ainava) +
     strip.text = element_text(face = "bold"),
     legend.background = element_rect(color = "black", fill = "white", size = 0.25) 
   ) +
-  guides(color = "none", shape = guide_legend(title = "Populāciju lieluma datu kvalitātes klase"))
+  guides(color = "none", shape = guide_legend(title = "Populāciju Īstermiņa tendences datu kvalitātes klase"))
 
 
 
