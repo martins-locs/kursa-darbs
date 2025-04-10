@@ -307,6 +307,12 @@ putni_dzied_ainava_long <- pivot_longer(putni_dzied_ainava,
                                         names_to = "Kolonna", 
                                         values_to = "Vērtība")
 
+putni_dzied_ainava_long$Kolonna <- factor(
+  putni_dzied_ainava_long$Kolonna,
+  levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")  # <-- tava izvēlētā secība
+)
+
+
 ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesname, color = Kolonna)) +
   
   geom_line(aes(group = speciesname), color = "lightgray", size = 0.1) +
