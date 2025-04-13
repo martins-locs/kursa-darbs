@@ -180,10 +180,6 @@ table(putni$metode)
 table(putni$akustiski.grupa)
 
 
-
-
-
-
 datu_saraksts <- list()
 
 for (skaitlis in ainavas) {
