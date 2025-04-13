@@ -456,7 +456,7 @@ for(i in seq_along(zinatniskie)){
   print("saglabāšana")
   zinatniskais_clean = gsub("/", "_", zinatniskais)
   
-  faila_nosaukums = paste0("../atteli/", zinatniskais_clean, ".png")
+  faila_nosaukums = paste0("./atteli/", zinatniskais_clean, ".png")
   ggsave(attels, filename = faila_nosaukums, height = 1800, width = 2700, dpi = 300, units = "px", device = "png")
 }
 
