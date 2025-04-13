@@ -239,6 +239,8 @@ prognoze_800$veids="Pārējie\nOthers"
 
 visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze_710,prognoze_720,prognoze_800)
 
+visi_prognoze$conf <- visi_prognoze$conf.high - visi_prognoze$conf.low
+
 #ggplot(visi_prognoze,aes(factor(x),predicted,ymin=conf.low,ymax=conf.high,shape=group,col=veids))+
 #geom_pointrange(position=position_jitterdodge(jitter.width=0.1,jitter.height = 0))+
 #ggthemes::scale_color_colorblind()+
