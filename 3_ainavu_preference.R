@@ -169,9 +169,9 @@ ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg",
 
 
 
-table(putni$population_method.text,useNA = "always")
+table(putni$population_trend_method.text,useNA = "always")
 putni=putni %>% 
-  mutate(metode=ifelse(population_method.text=="completeSurvey",0,1)) %>% 
+  mutate(metode=ifelse(population_trend_method.text=="completeSurvey",0,1)) %>% 
   mutate(akustiski.grupa=case_when(Dzied.Biotopa.attieciba<0.1~1,
                                    Dzied.Biotopa.attieciba<1~2,
                                    Dzied.Biotopa.attieciba>1~3)) %>% 
@@ -353,3 +353,4 @@ ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference.jpg",
        dpi = 300, 
        units = "px", 
        device = "jpg")
+
