@@ -1,8 +1,12 @@
+# 1. Bibliotēku ielāde ----
 library(readxl)
 library(ggplot2)
 library(patchwork)
 
 
+
+
+# 2. Datu ielāde ----
 putni <- read_excel("./IevadesDati/putni.xlsx")
 
 putni %>%
@@ -21,8 +25,9 @@ putni <- putni[!(is.na(putni$Dzied.Biotopa.attieciba) &
                    is.na(putni$population_trend_long.text)), ]
 
 
-# 1. Grafiks ----
 
+
+# 3. Grafiks Nr. 1 ----
 putni$population_trend_method.text <- factor(
   putni$population_trend_method.text,
   levels = c("absentData","estimateExpert", "estimatePartial", "completeSurvey")
@@ -45,7 +50,6 @@ grafiks_1 <- ggplot(na.omit(putni[, c("population_trend_method.text", "Dzied.Bio
     estimateExpert = "#A49A8E",
     estimatePartial = "#7F5A3C",
     completeSurvey = "#5E4B3C"
-    
   )) +
   xlab("Populācijas īstermiņa pārmaiņu datu kvalitātes klase\nQuality class of data for short-term population changes") +
   ylab("D-B pazīmju attiecība / D-B trait ratio") +
@@ -69,9 +73,7 @@ knitr::kable(rstatix::dunn_test(Dzied.Biotopa.attieciba ~ population_trend_metho
 
 
 
-
-# 2. Grafiks ----
-
+# 4. Grafiks Nr. 2 ----
 putni$population_estimate_type.text <- factor(
   putni$population_estimate_type.text,
   levels = c("Minimum", "estimate", "interval")
@@ -109,7 +111,6 @@ grafiks_2 <- ggplot(na.omit(putni[, c("population_estimate_type.text", "Dzied.Bi
 
 print(grafiks_2)
 
-
 kruskal_test <- kruskal.test(Dzied.Biotopa.attieciba ~ population_estimate_type.text, data = putni)
 kruskal_test
 # Rezultātā ir statistiski nozīmīgas atšķirības starp Populāciju aprēķinu veidiem.
@@ -119,9 +120,7 @@ knitr::kable(rstatix::dunn_test(Dzied.Biotopa.attieciba ~ population_estimate_ty
 
 
 
-
-# 3. Grafiks ----
-
+# 5. Grafiks Nr. 3 ----
 putni$population_trend_method.text <- factor(
   putni$population_trend_method.text,
   levels = c("absentData","estimateExpert", "estimatePartial", "completeSurvey")
@@ -165,8 +164,8 @@ knitr::kable(rstatix::dunn_test(population_size ~ population_trend_method.text, 
 
 
 
-# 4. Grafiks ----
 
+# 6. Grafiks Nr. 4 ----
 putni$population_estimate_type.text <- factor(
   putni$population_estimate_type.text,
   levels = c("Minimum", "estimate", "interval")
@@ -209,6 +208,7 @@ knitr::kable(rstatix::dunn_test(population_size ~ population_estimate_type.text,
 
 
 
+# 7. Attēlu saglabāšana ----
 grafiks_1 | grafiks_2
 
 ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_kvalitate.jpg", 
@@ -231,4 +231,3 @@ ggsave(filename = "./Rezultati/Putnu_populacija_monitorings.jpg",
        dpi = 300, 
        units = "px", 
        device = "jpg")
-
