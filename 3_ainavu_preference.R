@@ -1,3 +1,4 @@
+# 1. Bibliotēku ielāde ----
 library(readxl)
 library(ggplot2)
 library(dplyr)
@@ -9,14 +10,18 @@ library(effects)
 library(forcats)
 library(ggthemes)
 
+
+
+
+# 2. Datu ielāde un pārveide ainavu analīzei ----
 putni <- read_excel("./IevadesDati/putni.xlsx")
-
 ainavas <- c(100, 200, 310, 610, 710, 720, 800)
-
-
-
 putni_dzied_ainava <- data.frame()
 
+
+
+
+# 3. Ainavu datu pārveide un apvienošana ----
 for (skaitlis in ainavas) {
   putni_kopa <- putni %>%
     select(speciesname,
@@ -39,6 +44,9 @@ for (skaitlis in ainavas) {
 }
 
 
+
+
+# 4. Pārbaudes par nesakritībām SkaitsDzied/SkaitsBiotopa ----
 putni_dzied_ainava_skaitsDzied <- putni_kopa %>%
   filter(SkaitsBiotopa == 0, SkaitsDzied > 0) %>%
   summarise(count = n())
@@ -49,6 +57,8 @@ putni_dzied_ainava_skaitsBiotopa <- putni_kopa %>%
 
 
 
+
+# 5. Ainavu faktoru pārsaukšana ----
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
                                         "Mākslīgās virsmas\nBuilt-up" = "100",
@@ -59,7 +69,6 @@ putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
                                         "Niedrāji\nReedbeds" = "720",
                                         "Pārējie\nOthers" = "800"
 )
-
 
 putni_dzied_ainava <- putni_dzied_ainava %>%
   filter(!is.na(Ligzd_Putnu), !is.na(Dzied.Biotopa.attieciba)) %>%
@@ -75,12 +84,14 @@ putni_dzied_ainava <- putni_dzied_ainava %>%
     )
   )
 
-# Skaitām punktus katrā kvadrātā
+
+
+
+# 7. Punktu skaits kvadrantos un koordinātu aprēķins ----
 punktu_skaits_kvadratos <- putni_dzied_ainava %>%
   group_by(Ainava, x_statuss, y_statuss) %>%
   count(name = "punktu_skaits")
 
-# Pievienojam koordinātas, lai novietotu tekstu pareizajos kvadrātos
 punktu_skaits_kvadratos <- punktu_skaits_kvadratos %>%
   mutate(
     x_text = case_when(
@@ -97,6 +108,9 @@ punktu_skaits_kvadratos <- punktu_skaits_kvadratos %>%
   )
 
 
+
+
+# 8. Grafika veidošana ----
 ggplot(data = putni_dzied_ainava) +
   geom_point(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, 
                  color = "Ligzd_Putnu", shape = population_trend_method.text), 
@@ -143,7 +157,7 @@ ggplot(data = putni_dzied_ainava) +
 
 
 
-
+# 9. Kruskal-Wallis testi ----
 test_results <- list()
 for (ainava_group in unique(putni_dzied_ainava$Ainava)) {
   ainava_data <- putni_dzied_ainava %>% filter(Ainava == ainava_group)
@@ -152,6 +166,10 @@ for (ainava_group in unique(putni_dzied_ainava$Ainava)) {
 
 test_results
 
+
+
+
+# 10. Attēla saglabāšana ----
 ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg", 
        plot = last_plot(),
        height = 1800, 
@@ -163,12 +181,12 @@ ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg",
 
 
 
-
 ####
 
 
 
 
+# 11. Datu priekšapstrāde modeļiem ----
 table(putni$population_trend_method.text,useNA = "always")
 putni=putni %>% 
   mutate(metode=ifelse(population_trend_method.text=="completeSurvey",0,1)) %>% 
@@ -180,6 +198,9 @@ table(putni$metode)
 table(putni$akustiski.grupa)
 
 
+
+
+# 12. Loģistiskie regresijas modeļi pa ainavām ----
 datu_saraksts <- list()
 
 for (skaitlis in ainavas) {
@@ -207,6 +228,7 @@ for (skaitlis in ainavas) {
 
 
 
+
 #modelis720=glm(metode~akustiski.grupa*Ligzd_Putnu_720,data=putni,family=binomial(link="logit"))
 #summary(modelis720)
 #sjPlot::tab_model(modelis720)
@@ -220,6 +242,7 @@ for (skaitlis in ainavas) {
 
 
 
+# 13. Modeļu prognožu izvilkšana un apvienošana ----
 vektors=c(0.01,0.1,0.5,1,2,10)
 prognoze_100=as.data.frame(ggeffects::ggpredict(modelis_100,terms=c("Ligzd_Putnu_100[vektors]","akustiski.grupa")))
 prognoze_100$veids="Mākslīgās virsmas\nBuilt-up"
@@ -277,6 +300,7 @@ ggsave(filename = "./Rezultati/prognoze.jpg",
 
 
 sjPlot::tab_model(modelis_100, modelis_200, modelis_310, modelis_610, modelis_710, modelis_720, modelis_800)
+
 
 
 
@@ -351,4 +375,3 @@ ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference.jpg",
        dpi = 300, 
        units = "px", 
        device = "jpg")
-
