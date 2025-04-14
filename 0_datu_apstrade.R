@@ -1,4 +1,4 @@
-# 1. bibliotēkas ----
+# 1. Bibliotēku ielāde ----
 library(tidyverse)
 library(terra)
 library(sf)
@@ -7,15 +7,23 @@ library(writexl)
 library(openxlsx)
 
 
-# 2. datu ielāde ----
+
+
+# 2. Ainavas un novērojumu datu ielāde un apstrāde ----
+
+## 2.1. Ainavas rastra ielāde ----
 Sys.setlocale("LC_NUMERIC", "C")
 ainava=terra::rast("../IevadesDati/Ainava_vienk_mask.tif")
 
+
+## 2.2. Novērojumu (GPKG) datu ielāde un pārveidošana ----
 st_layers("../IevadesDati/martinam_dabasdati.gpkg")
 noverojumi0=read_sf("../IevadesDati/martinam_dabasdati.gpkg",
                     layer="putni_dabasdati_2023")
 noverojumi0=st_transform(noverojumi0,crs=st_crs(ainava))
 
+
+## 2.3. Putnu sugu nosaukumu tīrīšana ----
 noverojumi0 <- noverojumi0 %>%
   mutate(sugaZIN = trimws(sugaZIN),
          sugaZIN = str_replace(sugaZIN, " f. domestica", ""),
@@ -30,10 +38,14 @@ noverojumi0 <- noverojumi0 %>%
 
 
 
-# 3. Noverojumi ainavas klases ----
+# 3. Novērojumu piesaiste ainavas klasēm ----
+
+## 3.1. Rindu ID pievienošana ----
 noverojumi0=noverojumi0 %>% 
   mutate(rinda_ID=rownames(.))
 
+
+## 3.2. Pikseļu klasifikācijas pievienošana novērojumiem ----
 klases=terra::extract(ainava,noverojumi0,method="simple")
 klases=klases %>% 
   mutate(rinda_ID=as.character(ID),
@@ -49,14 +61,11 @@ klases <- klases %>%
     TRUE ~ klase
   ))
 
-
 noverojumi0=noverojumi0 %>% 
   left_join(klases,"rinda_ID")
 
 
-
-
-## 3.1. Klasu platiba ----
+## 3.3. Ainavas klases – pikseļu biežums un relatīvā platība ----
 klasu_platibas=terra::freq(ainava)
 
 klasu_platibas <- klasu_platibas %>%
@@ -76,17 +85,22 @@ klasu_platibas=klasu_platibas %>%
   mutate(kopeja_platiba=sum(count),
          klases_ipatsvars=count/kopeja_platiba)
 
-#klasu_platibas=klasu_platibas %>% 
-#  dplyr::select(-layer)
+#klasu_platibas=klasu_platibas %>% dplyr::select(-layer)
 
 
 
 
+# 4. Vides ielāde vai saglabāšana ----
+#write.xlsx(klasu_platibas, "klasu_platibas.xlsx", overwrite = TRUE)
 #save.image(file = "../IevadesDati/my_environment.RData")
 load("../IevadesDati/my_environment.RData")
 
-#write.xlsx(klasu_platibas, "klasu_platibas.xlsx", overwrite = TRUE)
 
+
+
+# 5. Putnu novērojumu datu sagatavošana un preferenču analīze ainavu klasēs ----
+
+## 5.1. “Klases vērtību apvienošana līdzīgās kategorijās ----
 noverojumi <- noverojumi0 %>%
   mutate(klase = case_when(
     klase == 500 ~ 100,
@@ -102,9 +116,7 @@ noverojumi <- noverojumi0 %>%
   ))
 
 
-
-
-## 3.2. Noverojumi 2 ----
+## 5.2. Novērojumu skaita aprēķins dažādos līmeņos ----
 noverojumi2=noverojumi %>% 
   group_by(sugaLV,sugaZIN) %>% 
   mutate(novsk_Suga=n()) %>% 
@@ -118,7 +130,7 @@ noverojumi2=noverojumi %>%
   ungroup()
 
 
-## 3.2. Noverojumi 3 ----
+## 5.3. Novērojumu apvienošana ar klasēm un klasifikācija ----
 klasu_platibas <- klasu_platibas %>%
   mutate(value = as.numeric(value))
 
@@ -130,7 +142,7 @@ klasu_skaits <- noverojumi3 %>%
   summarise(skaits = n())
 
 
-## 3.3. Noverojumi apkopots ----
+## 5.4. Novērojumu statistikas apkopošana un sugu preferenču aprēķins ----
 noverojumi_apkopots=data.frame(noverojumi3) %>% 
   group_by(sugaLV,sugaZIN,klase) %>% 
   summarise(klases_platiba=mean(count),
@@ -146,9 +158,7 @@ noverojumi_apkopots=data.frame(noverojumi3) %>%
   mutate(tips="Visi novērojumi")
 
 
-
-
-## 3.4. Ainavklases apvienotas ----
+## 5.5. Putnu preferenču aprēķins ainavas klasēm kopumā ----
 ainavklasem=data.frame(noverojumi3) %>% 
   group_by(klase) %>% 
   summarise(klases_ipatsvars=mean(klases_ipatsvars),
@@ -165,7 +175,7 @@ ainavklasem=rbind(ainavklasem,pievienot)
 
 
 
-#4. Ligzdotāju atlase ----
+# 6. Ligzdojošo putnu filtrēšana pēc statusa ----
 print(unique(noverojumi3$statuss))
 
 pazimes=c(
@@ -184,7 +194,6 @@ pazimes=c(
   "Teritoriāla uzvedība (ligzdotājam) (T)",
   "Uzturas ligzdošanai piemērotā biotopā (B)",
   "Dzied ligzdošanai piemērotā biotopā (D)",
-  "Pāris ligzdošanai piemērotā biotopā (P)",
   "Perēšanas laukums pieaugušam putnam (L)"
 )
 ligzdotaji = noverojumi3 %>% 
@@ -192,7 +201,7 @@ ligzdotaji = noverojumi3 %>%
 
 
 
-##4.1. Vokalizējošo ligzdotāju attiecību aprēķins ----
+## 6.1. Vokalizējošo ligzdotāju proporcija starp iespējamajiem ligzdotājiem ----
 print(unique(noverojumi3$statuss))
 pazimes=c(
   "Uzturas ligzdošanai piemērotā biotopā (B)",
@@ -213,7 +222,7 @@ print(ipatsvars)
 
 
 
-## 4.2. Ligzdotaji 2 ----
+## 6.2. Ligzdotāju novērojumu skaita aprēķins dažādos līmeņos ----
 ligzdotaji2 = ligzdotaji %>% 
   group_by(sugaLV, sugaZIN) %>% 
   mutate(novsk_Suga = n()) %>% 
@@ -230,7 +239,7 @@ ligzdotaji2 = ligzdotaji %>%
 
 
 
-## 4.3. Darbs ar vokalizējošiem ligzdotajiem ----
+## 6.3. Vokalizējošo ligzdotāju apkopošana un preferenču aprēķins ----
 ligzdotaji2_D = ligzdotaji_D %>% 
   group_by(sugaLV, sugaZIN) %>% 
   mutate(novsk_Suga = n()) %>% 
@@ -262,7 +271,7 @@ ligzdotaji_apkopots_D=data.frame(ligzdotaji2_D) %>%
 
 
 
-## 4.4. Ligzdotaji apkopots ----
+## 6.4. Visiem ligzdotājiem preferenču aprēķins ----
 ligzdotaji_apkopots=data.frame(ligzdotaji2) %>% 
   group_by(sugaLV,sugaZIN,klase) %>% 
   summarise(klases_platiba=mean(count),
@@ -281,7 +290,7 @@ ligzdotaji_apkopots=data.frame(ligzdotaji2) %>%
 
 
 
-## 4.5. Ainavklases ligzdotajiem apvienotas ----
+## 6.5. Ainavklases ligzdotajiem apvienotas ----
 ainavklasem_ligzdotaji = data.frame(ligzdotaji2) %>% 
   #mutate(klase = klasu_aizvietojums(klase)) %>%
   group_by(klase) %>% 
@@ -305,15 +314,14 @@ ainavklasem_ligzdotaji = rbind(ainavklasem_ligzdotaji, pievienot)
 
 
 
-#XX Izeksportet preferences
+#Izeksportet preferences
 #write.csv(noverojumi_apkopots, "./atlase/noverojumi_apkopots.csv", row.names = FALSE)
 #write.csv(ligzdotaji_apkopots, "./atlase/ligzdotaji_apkopots.csv", row.names = FALSE)
 
 
 
 
-## Eksportē preferneces ----
-
+## 6.6. Eksportē preferneces ----
 # Pārveidojam datus no 'noverojumi_apkopots'
 df_sugas <- noverojumi_apkopots %>%
   dplyr::select(sugaLV, sugaZIN, klase, pref_SugasIetvaros) %>%
@@ -345,7 +353,7 @@ df_final <- df_sugas %>%
 
 # 7. Attēlu automatizācija ----
 zinatniskie = levels(factor(noverojumi_apkopots$sugaZIN))
-dir.create("./atteli/", showWarnings = FALSE)
+dir.create("./Atteli/", showWarnings = FALSE)
 
 for(i in seq_along(zinatniskie)){
   print(i)
@@ -456,7 +464,6 @@ for(i in seq_along(zinatniskie)){
   print("saglabāšana")
   zinatniskais_clean = gsub("/", "_", zinatniskais)
   
-  faila_nosaukums = paste0("./atteli/", zinatniskais_clean, ".png")
+  faila_nosaukums = paste0("./Atteli/", zinatniskais_clean, ".png")
   ggsave(attels, filename = faila_nosaukums, height = 1800, width = 2700, dpi = 300, units = "px", device = "png")
 }
-
