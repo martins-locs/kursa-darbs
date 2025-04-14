@@ -58,7 +58,7 @@ putni_dzied_ainava_skaitsBiotopa <- putni_kopa %>%
 
 
 
-# 4. Datu pārsaukšana un filtrēšana ----
+# 4. Ainavu faktoru pārsaukšana un datu filtrēšana ----
 
 ## 4.1. Ainavu faktoru pārsaukšana ----
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
