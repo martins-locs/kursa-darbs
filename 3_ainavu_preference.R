@@ -21,7 +21,9 @@ putni_dzied_ainava <- data.frame()
 
 
 
-# 3. Ainavu datu pārveide un apvienošana ----
+# 3. Datu apstrāde ainavu griezumā ----
+
+## 3.1. Ainavu datu pārveide un apvienošana ----
 for (skaitlis in ainavas) {
   putni_kopa <- putni %>%
     select(speciesname,
@@ -44,9 +46,7 @@ for (skaitlis in ainavas) {
 }
 
 
-
-
-# 4. Pārbaudes par nesakritībām SkaitsDzied/SkaitsBiotopa ----
+## 3.2. Pārbaudes par nesakritībām SkaitsDzied/SkaitsBiotopa ----
 putni_dzied_ainava_skaitsDzied <- putni_kopa %>%
   filter(SkaitsBiotopa == 0, SkaitsDzied > 0) %>%
   summarise(count = n())
@@ -58,7 +58,9 @@ putni_dzied_ainava_skaitsBiotopa <- putni_kopa %>%
 
 
 
-# 5. Ainavu faktoru pārsaukšana ----
+# 4. Datu pārsaukšana un filtrēšana ----
+
+## 4.1. Ainavu faktoru pārsaukšana ----
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava$Ainava <- fct_recode(putni_dzied_ainava$Ainava,
                                         "Mākslīgās virsmas\nBuilt-up" = "100",
@@ -85,9 +87,7 @@ putni_dzied_ainava <- putni_dzied_ainava %>%
   )
 
 
-
-
-# 7. Punktu skaits kvadrantos un koordinātu aprēķins ----
+## 4.2. Kvadrantu koordinātas un punktu skaits ----
 punktu_skaits_kvadratos <- putni_dzied_ainava %>%
   group_by(Ainava, x_statuss, y_statuss) %>%
   count(name = "punktu_skaits")
@@ -108,9 +108,7 @@ punktu_skaits_kvadratos <- punktu_skaits_kvadratos %>%
   )
 
 
-
-
-# 8. Grafika veidošana ----
+## 4.3. Grafika veidošana ----
 ggplot(data = putni_dzied_ainava) +
   geom_point(aes(x = Ligzd_Putnu, y = Dzied.Biotopa.attieciba, 
                  color = "Ligzd_Putnu", shape = population_trend_method.text), 
@@ -155,9 +153,7 @@ ggplot(data = putni_dzied_ainava) +
   guides(color = "none", shape = guide_legend(title = "Populāciju Īstermiņa tendences datu kvalitātes klase"))
 
 
-
-
-# 9. Kruskal-Wallis testi ----
+## 4.4. Kruskal-Wallis testi ----
 test_results <- list()
 for (ainava_group in unique(putni_dzied_ainava$Ainava)) {
   ainava_data <- putni_dzied_ainava %>% filter(Ainava == ainava_group)
@@ -167,9 +163,7 @@ for (ainava_group in unique(putni_dzied_ainava$Ainava)) {
 test_results
 
 
-
-
-# 10. Attēla saglabāšana ----
+## 4.5. Attēla saglabāšana ----
 ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg", 
        plot = last_plot(),
        height = 1800, 
@@ -186,7 +180,9 @@ ggsave(filename = "./Rezultati/Putnu_sugu_akustiska_ainava.jpg",
 
 
 
-# 11. Datu priekšapstrāde modeļiem ----
+# 5. Modeļu sagatavošana un analīze ----
+
+## 5.1. Datu priekšapstrāde modeļiem ----
 table(putni$population_trend_method.text,useNA = "always")
 putni=putni %>% 
   mutate(metode=ifelse(population_trend_method.text=="completeSurvey",0,1)) %>% 
@@ -198,9 +194,7 @@ table(putni$metode)
 table(putni$akustiski.grupa)
 
 
-
-
-# 12. Loģistiskie regresijas modeļi pa ainavām ----
+## 5.2. Loģistiskie regresijas modeļi pa ainavām ----
 datu_saraksts <- list()
 
 for (skaitlis in ainavas) {
@@ -242,8 +236,13 @@ for (skaitlis in ainavas) {
 
 
 
-# 13. Modeļu prognožu izvilkšana un apvienošana ----
+# 6. Modeļu prognožu izvilkšana un apvienošana ----
+
+## 6.1. Parametru definēšana ----
 vektors=c(0.01,0.1,0.5,1,2,10)
+
+
+## 6.2. Modeļu prognožu ģenerēšana pa ainavu klasēm ----
 prognoze_100=as.data.frame(ggeffects::ggpredict(modelis_100,terms=c("Ligzd_Putnu_100[vektors]","akustiski.grupa")))
 prognoze_100$veids="Mākslīgās virsmas\nBuilt-up"
 prognoze_200=as.data.frame(ggeffects::ggpredict(modelis_200,terms=c("Ligzd_Putnu_200[vektors]","akustiski.grupa")))
@@ -260,9 +259,10 @@ prognoze_800=as.data.frame(ggeffects::ggpredict(modelis_800,terms=c("Ligzd_Putnu
 prognoze_800$veids="Pārējie\nOthers"
 
 
+## 6.3. Datu apvienošana un sagatavošana vizualizācijai ----
 visi_prognoze=rbind(prognoze_100,prognoze_200,prognoze_310,prognoze_610,prognoze_710,prognoze_720,prognoze_800)
-
 visi_prognoze$conf <- visi_prognoze$conf.high - visi_prognoze$conf.low
+
 
 #ggplot(visi_prognoze,aes(factor(x),predicted,ymin=conf.low,ymax=conf.high,shape=group,col=veids))+
 #geom_pointrange(position=position_jitterdodge(jitter.width=0.1,jitter.height = 0))+
@@ -270,6 +270,7 @@ visi_prognoze$conf <- visi_prognoze$conf.high - visi_prognoze$conf.low
 #theme_classic()
 
 
+## 6.4. Prognožu vizualizācija un saglabāšana ----
 visi_prognoze$veids <- factor(visi_prognoze$veids, levels = c("Mākslīgās virsmas\nBuilt-up", "Ūdeņi\nWaters", "Lauksaimniecības zemes\nFarmlands", "Meži\nForests", "Purvi\nBogs", "Niedrāji\nReedbeds", "Pārējie\nOthers"))
 
 ggplot(visi_prognoze, aes(factor(x), predicted,
@@ -299,6 +300,9 @@ ggsave(filename = "./Rezultati/prognoze.jpg",
        device = "jpg")
 
 
+
+
+## 6.5. Modeļu kopsavilkums tabulā ----
 sjPlot::tab_model(modelis_100, modelis_200, modelis_310, modelis_610, modelis_710, modelis_720, modelis_800)
 
 
@@ -309,20 +313,25 @@ sjPlot::tab_model(modelis_100, modelis_200, modelis_310, modelis_610, modelis_71
 
 
 
+# 7. Datu transformācija un preferenču attēlošana pa ainavu klasēm ----
+
+## 7.1. Datu pārveide garajā formā ----
 putni_dzied_ainava$Ainava <- as.factor(putni_dzied_ainava$Ainava)
 putni_dzied_ainava_long <- pivot_longer(putni_dzied_ainava, 
                                         cols = c(Sugas, Putnu, Ligzd_Sugas, Ligzd_Putnu),
                                         names_to = "Kolonna", 
                                         values_to = "Vērtība")
 
-
 putni_dzied_ainava_long$Kolonna <- factor(
   putni_dzied_ainava_long$Kolonna,
   levels = c("Ligzd_Putnu", "Ligzd_Sugas", "Putnu", "Sugas")  # <-- tava izvēlētā secība
 )
 
+
+
+
+## 7.2 Preferenču vizualizācija un saglabāšana  ----
 ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesname, color = Kolonna)) +
-  
   geom_line(aes(group = speciesname), color = "lightgray", size = 0.1) +
   geom_point(size = 0.5) +
   geom_hline(yintercept = 1, lty = 3, size = 0.5) +
@@ -366,7 +375,6 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
   facet_wrap(~ Ainava, nrow = 1, scales = "fixed") +
   EnvStats::stat_n_text(vjust = -0.5, size = 2.5) +
   guides(color = guide_legend(title = NULL))
-
 
 ggsave(filename = "./Rezultati/Putnu_sugu_ainavu preference.jpg", 
        plot = last_plot(),
