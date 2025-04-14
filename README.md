@@ -19,13 +19,13 @@
 - **`3_ainavu_preference.R`**  
   Tiek veidoti loģistiskās regresijas modeļi, analizēta ainavu tipu ietekme uz sugu klātbūtni un dziedāšanu. Rezultāti tiek vizualizēti, lai izceltu būtiskās ainavu struktūras, kas ietekmē sugu izvēli.
 
-### [Ievades Dati/](./IevadesDati/)
+### [IevadesDati/](./IevadesDati/)
 Šī mape satur dažādu veidu ievades datus, kas izmantoti datu apstrādei un analīzei:
 - `LV_birds_reports_2019.xlsx` un `LV_birds_reports_20191030-151740.xml` — putnu novērojumu dati no 2019. gada.
 - `preferences.xlsx` — dati par ekspertu vērtētajām ainavu preferencēm dažādām sugām.
 - `putni.xlsx` un `putni_SkaitiPazimes_kops2016.xlsx` — strukturētie dati par ligzdojošo putnu sugām Latvijā un to pazīmēm.
 
-### [Rezultāti/](./Rezultati/)
+### [Rezultati/](./Rezultati/)
 Šī mapes satur attēlus, kas ilustrē galvenos darba rezultātus:
 - `Putnu_populacija_monitorings.jpg` — Putnu sugu populāciju lielumu sadalījums saistībā ar populācijas populācijas īstermiņa pārmaiņu datu kvalitāti un populācijas lieluma aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
 - `Putnu_sugu_ainavu_preference.jpg` — Preference ainavas klasēm divos aprēķinu veidos un atsevišķi izdalītiem uz ligzdošanu attiecināmajiem novērojumiem katrā no tiem.
@@ -33,7 +33,7 @@
 - `Putnu_sugu_akustiska_kvalitate.jpg` — Akustisko signālu nozīmes sugu novērojumos (D-B attiecība) saistībā ar populācijas īstermiņa pārmaiņu datu kvalitāti un populācijas lieluma aprēķinu veidu Putnu Direktīvas 12. panta ziņojumā par 2013.-2018. gadu periodu.
 - `prognoze.jpg` — Prognozētā varbūtība uzlabot informācijas par putnu populācijām kvalitāti, atkarībā no sugas akustiskuma un preferences izmantotajām ainavas klasēm.
 
-### [Attēli/](./atteli/)
+### [Atteli/](./Atteli/)
 Šī mapes satur 280 putnu sugu ainavu klašu preferences vizualizācijas
 
 ##
