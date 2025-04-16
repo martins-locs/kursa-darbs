@@ -23,10 +23,6 @@ noverojumi0=read_sf("../IevadesDati/martinam_dabasdati.gpkg",
 noverojumi0=st_transform(noverojumi0,crs=st_crs(ainava))
 
 
-## 2.3. Putnu sugu nosaukumu tīrīšana ----
-
-
-
 
 
 # 3. Novērojumu piesaiste ainavas klasēm ----
@@ -338,7 +334,7 @@ df_final <- df_sugas %>%
   left_join(df_ligzd_putni, by = c("sugaLV", "sugaZIN"))
 
 # Saglabājam rezultātu kā Excel failu
-#write_xlsx(df_final, "./IevadesDati/preferences.xlsx")
+write_xlsx(df_final, "./IevadesDati/preferences.xlsx")
 
 
 
