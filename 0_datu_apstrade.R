@@ -24,16 +24,7 @@ noverojumi0=st_transform(noverojumi0,crs=st_crs(ainava))
 
 
 ## 2.3. Putnu sugu nosaukumu tīrīšana ----
-noverojumi0 <- noverojumi0 %>%
-  mutate(sugaZIN = trimws(sugaZIN),
-         sugaZIN = str_replace(sugaZIN, " f. domestica", ""),
-         sugaZIN = sapply(str_split(sugaZIN, " "), function(x) {
-           if (length(x) == 3) paste(x[1], x[2]) else paste(x, collapse = " ")
-         }))
 
-noverojumi0 <- noverojumi0 %>%
-  filter(!str_detect(sugaLV, " sp\\.") & !str_detect(sugaLV, "/") &
-           !str_detect(sugaZIN, " sp\\.") & !str_detect(sugaZIN, "/"))
 
 
 

@@ -36,6 +36,7 @@ write.xlsx(xml_dati, "./IevadesDati/LV_birds_reports_2019.xlsx")
 putni_direktiva <- read_excel("./IevadesDati/LV_birds_reports_2019.xlsx")
 putni_dabasdati <- read_excel("./IevadesDati/putni_SkaitiPazimes_kops2016.xlsx", .name_repair = "universal")
 
+
 putni_dabasdati <- putni_dabasdati %>%
   mutate(sugaZIN = trimws(sugaZIN),
          sugaZIN = str_replace(sugaZIN, " f. domestica", ""),
