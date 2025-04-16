@@ -366,7 +366,7 @@ ggplot(putni_dzied_ainava_long, aes(x = Kolonna, y = Vērtība, group = speciesn
     plot.title = element_text(hjust = 0.5, face = "bold"),
     panel.border = element_rect(color = "black", fill = NA, size = 0.5),
     strip.background = element_blank(),
-    strip.text = element_text(color = "black", face = "bold", size = 10),
+    strip.text = element_text(color = "black", face = "bold", size = 8),
     axis.text.x = element_blank(),
     legend.position = "bottom",
     legend.text = element_text(size = 9.5)
